@@ -22,9 +22,7 @@ for (var i = 0; i < jokers.length; i++) {
 	deck.push("<div class='card'><p>" + jokers[i] + "</p><img src='img/joker.png' alt='jester-hat'></div>");
 }
 
-var discards = []
-var click = 0;
-var yourCardVal;
+// var discards = []
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex ;
@@ -49,33 +47,28 @@ shuffle(deck);
 var oppoDeck = deck.splice(deck.length/2, deck.length/2);
 var yourDeck = deck;
 
-$("button").on("click", playGame)
+var yourCardVal, oppoCardVal, yourCard, oppoCard;
+var matchNum = 0;
 
-function playGame(){
-	click++;
-	var randomIndex = Math.floor((Math.random() * deck.length));
+$("#start").on("click", regularPlay)
 
+function regularPlay(){
+	matchNum++;
 	$("#you").empty();
-	$("#you").append("<h3>Your Play:</h3>" + deck[randomIndex]);
+	$("#you").append("<h3>Your Play:</h3>" + yourDeck[matchNum]);
 	// discards.push(deck[randomIndex]);
 	// deck.splice(randomIndex,1);
-	var yourCard = $(".card").eq(0).text();
+	yourCard = $(".card").eq(0).text();
 
-	$("#opponent").empty();
-	$("#opponent").append("<h3>Opponent's Play:</h3>" + deck[randomIndex]);
+	$("#oppo").empty();
+	$("#oppo").append("<h3>Opponent's Play:</h3>" + oppoDeck[matchNum]);
 	// discards.push(deck[randomIndex]);
 	// deck.splice(randomIndex,1);
-	var oppoCard = $(".card").eq(1).text()
+	oppoCard = $(".card").eq(1).text();
+	whoWins(yourCard, oppoCard);
+}
 
-	if (parseInt(yourCard) !== NaN && parseInt(oppoCard) !== NaN) {
-		if (parseInt(yourCard) > parseInt(oppoCard)) {
-			console.log("You win");
-			winner = 
-		} else {
-			console.log("You lose");
-		}
-	}
-
+function whoWins(yourCard, oppoCard) {
 	if (yourCard === "jack") {
 		yourCardVal = 11;
 	}
@@ -94,7 +87,6 @@ function playGame(){
 	else {
 		yourCardVal = parseInt(yourCard);
 	}
-
 
 	if (oppoCard === "jack") {
 		oppoCardVal = 11;
@@ -115,11 +107,35 @@ function playGame(){
 		oppoCardVal = parseInt(oppoCard);
 	}
 
-	if (yourCard > oppoCard) {
+	if (yourCardVal > oppoCardVal) {
 		console.log("You win cards")
 	}
-	else {
+	else if (yourCardVal < oppoCardVal){
 		console.log("You lose cards");
 	}
+	else if (yourCardVal === oppoCardVal) {
+		console.log("WAR!");
+		$("#march").css("display", "block");
+		$("#march").on("click", wageWar)
+	}
+}
+
+var marchClicks = 0;
+
+function wageWar() {
+	$("#march").css("display", "none");
+	$("#you").append("<div class='card'><p>cardback</p></div");
+	$("#you").append("<div class='card'><p>cardback</p></div");
+	$("#you").append("<div class='card'><p>cardback</p></div");
+	$("#you").append(yourDeck[3]);
+	yourCard = $(".card").eq(4).text();
+
+	$("#oppo").append("<div class='card'><p>cardback</p></div");
+	$("#oppo").append("<div class='card'><p>cardback</p></div");
+	$("#oppo").append("<div class='card'><p>cardback</p></div");
+	$("#oppo").append(oppoDeck[3]);
+	oppoCard = $(".card").eq(9).text();
+
+	whoWins(yourCard, oppoCard);
 
 }

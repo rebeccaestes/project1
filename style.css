@@ -44,13 +44,21 @@ footer {
 	padding-top: 30px;
 }
 
+cardDown {
+
+}
+
 button {
 	font-size: 12px;
-	width: 100px;
+	width: 150px;
 	border: solid black 2px;
 	border-radius: 10px;
 	padding: 5px;
 	margin: 10px;
+}
+
+#march {
+	display: none;
 }
 
 p {
