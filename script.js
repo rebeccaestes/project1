@@ -16,7 +16,7 @@ for (var i = 0; i < pistols.length; i++) {
 	deck.push("<div class='card'><p>" + pistols[i] + "</p><img src='img/pistol.png' alt='pistol'></div>");
 }
 for (var i = 0; i < cannons.length; i++) {
-	deck.push("<div class='card'><p>" + cannons[i] + "</p></p><img src='img/cannon.png' alt='canon'></div>");
+	deck.push("<div class='card'><p>" + cannons[i] + "</p><img src='img/cannon.png' alt='canon'></div>");
 }
 for (var i = 0; i < jokers.length; i++) {
 	deck.push("<div class='card'><p>" + jokers[i] + "</p><img src='img/joker.png' alt='jester-hat'></div>");
@@ -74,10 +74,10 @@ function whoWins(yourCard, oppoCard) {
 	else if (yourCard === "queen") {
 		yourCardVal = 12;
 	}
-	else if (yourCard === "queen") {
+	else if (yourCard === "king") {
 		yourCardVal = 13;
 	}
-	else if (yourCard === "king") {
+	else if (yourCard === "ace") {
 		yourCardVal = 14;
 	}
 	else if (yourCard === "jester" || yourCard === "joker") {
@@ -93,10 +93,10 @@ function whoWins(yourCard, oppoCard) {
 	else if (oppoCard === "queen") {
 		oppoCardVal = 12;
 	}
-	else if (oppoCard === "queen") {
+	else if (oppoCard === "king") {
 		oppoCardVal = 13;
 	}
-	else if (oppoCard === "king") {
+	else if (oppoCard === "ace") {
 		oppoCardVal = 14;
 	}
 	else if (oppoCard === "jester" || oppoCard === "joker") {
@@ -109,7 +109,7 @@ function whoWins(yourCard, oppoCard) {
 	if (yourCardVal > oppoCardVal) {
 		console.log("You win cards")
 		for (var i = 0; i < $(".card").length; i++) {
-			yourDeck.push($(".card")[i]);
+			yourDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
 		}
 		yourDeck.splice(0, 1);
 		oppoDeck.splice(0, 1);
@@ -120,7 +120,7 @@ function whoWins(yourCard, oppoCard) {
 	else if (yourCardVal < oppoCardVal){
 		console.log("You lose cards");
 		for (var i = 0; i < $(".card").length; i++) {
-			oppoDeck.push($(".card")[i]);
+			oppoDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
 		}
 		yourDeck.splice(0, 1);
 		oppoDeck.splice(0, 1);
@@ -131,26 +131,32 @@ function whoWins(yourCard, oppoCard) {
 	else if (yourCardVal === oppoCardVal) {
 		console.log("WAR!");
 		$("#march").css("display", "inline");
+		$("#start").css("display", "none");
 		$("#march").on("click", wageWar);
 	}
 }
 
 function wageWar() {
 	$("#march").css("display", "none");
-	$("#you").append("<div class='card'><p>cardback</p></div");
-	$("#you").append("<div class='card'><p>cardback</p></div");
-	$("#you").append("<div class='card'><p>cardback</p></div");
+	$("#retreat").css("display", "inline");
+	$("#you").append(yourDeck[1]);
+	$("#you").append(yourDeck[2]);
 	$("#you").append(yourDeck[3]);
-	yourDeck.splice(1, 4);
-	yourCard = $(".card").eq(4).text();
+	yourDeck.splice(1, 3);
+	yourCard = $(".card").eq(3).text();
 
-	$("#oppo").append("<div class='card'><p>cardback</p></div");
-	$("#oppo").append("<div class='card'><p>cardback</p></div");
-	$("#oppo").append("<div class='card'><p>cardback</p></div");
+	$("#oppo").append(oppoDeck[1]);
+	$("#oppo").append(oppoDeck[2]);
 	$("#oppo").append(oppoDeck[3]);
-	oppoDeck.splice(1, 4);
-	oppoCard = $(".card").eq(9).text();
-
+	oppoDeck.splice(1, 3);
+	oppoCard = $(".card").eq(7).text();
+	// $("#start").css("display", "none");
+	
 	whoWins(yourCard, oppoCard);
+}
 
+$("#retreat").on("click"), function() {
+	$("#you").empty();
+	$("#oppo").empty();
+	regularPlay();
 }

@@ -15,6 +15,10 @@ div.card {
 	float: left;
 }
 
+#start {
+	display: inline;
+}
+
 #swords > .card {
 	background: peru;
 }
@@ -61,6 +65,10 @@ button {
 	display: none;
 }
 
+#retreat{
+	display: none;
+}
+
 p {
 	padding: 2px 5px 2px 5px;
 }
@@ -74,6 +82,10 @@ div.pile {
 	float: left;
 	width: 150px;
 	display: block;
+}
+
+#continue {
+	display: none;
 }
 
 .cf:before, .cf:after {
