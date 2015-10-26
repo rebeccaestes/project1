@@ -48,23 +48,22 @@ var oppoDeck = deck.splice(deck.length/2, deck.length/2);
 var yourDeck = deck;
 
 var yourCardVal, oppoCardVal, yourCard, oppoCard;
-var matchNum = 0;
 
 $("#start").on("click", regularPlay)
 
 function regularPlay(){
-	matchNum++;
 	$("#you").empty();
-	$("#you").append("<h3>Your Play:</h3>" + yourDeck[matchNum]);
+	$("#you").append("<h3>Your Play:</h3>" + yourDeck[0]);
 	// discards.push(deck[randomIndex]);
 	// deck.splice(randomIndex,1);
 	yourCard = $(".card").eq(0).text();
 
 	$("#oppo").empty();
-	$("#oppo").append("<h3>Opponent's Play:</h3>" + oppoDeck[matchNum]);
+	$("#oppo").append("<h3>Opponent's Play:</h3>" + oppoDeck[0]);
 	// discards.push(deck[randomIndex]);
 	// deck.splice(randomIndex,1);
 	oppoCard = $(".card").eq(1).text();
+
 	whoWins(yourCard, oppoCard);
 }
 
@@ -109,18 +108,32 @@ function whoWins(yourCard, oppoCard) {
 
 	if (yourCardVal > oppoCardVal) {
 		console.log("You win cards")
+		for (var i = 0; i < $(".card").length; i++) {
+			yourDeck.push($(".card")[i]);
+		}
+		yourDeck.splice(0, 1);
+		oppoDeck.splice(0, 1);
+		if (yourDeck[0] === undefined || oppoDeck[0] === undefined) {
+			console.log("GAME OVER");
+		}
 	}
 	else if (yourCardVal < oppoCardVal){
 		console.log("You lose cards");
+		for (var i = 0; i < $(".card").length; i++) {
+			oppoDeck.push($(".card")[i]);
+		}
+		yourDeck.splice(0, 1);
+		oppoDeck.splice(0, 1);
+		if (yourDeck[0] === undefined || oppoDeck[0] === undefined) {
+			console.log("GAME OVER");
+		}
 	}
 	else if (yourCardVal === oppoCardVal) {
 		console.log("WAR!");
-		$("#march").css("display", "block");
-		$("#march").on("click", wageWar)
+		$("#march").css("display", "inline");
+		$("#march").on("click", wageWar);
 	}
 }
-
-var marchClicks = 0;
 
 function wageWar() {
 	$("#march").css("display", "none");
