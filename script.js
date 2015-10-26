@@ -53,7 +53,6 @@ $("#start").on("click", regularPlay)
 
 function regularPlay(){
 	emptyCards();
-	$("#retreat").css("display", "none");
 	$("#you").append("<h3>Your Play:</h3>" + yourDeck[0]);
 	// discards.push(deck[randomIndex]);
 	// deck.splice(randomIndex,1);
@@ -107,7 +106,7 @@ function whoWins(yourCard, oppoCard) {
 	}
 
 	if (yourCardVal > oppoCardVal) {
-		console.log("You win cards")
+		$("#results").html("<p>You won these cards!</p><p>You have " + yourDeck.length +" cards, and your opponent has " + oppoDeck.length + ".</p>");
 		for (var i = 0; i < $(".card").length; i++) {
 			yourDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
 		}
@@ -118,7 +117,7 @@ function whoWins(yourCard, oppoCard) {
 		}
 	}
 	else if (yourCardVal < oppoCardVal){
-		console.log("You lose cards");
+		$("#results").html("<p>You lost these cards :(</p>");
 		for (var i = 0; i < $(".card").length; i++) {
 			oppoDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
 		}
@@ -129,16 +128,16 @@ function whoWins(yourCard, oppoCard) {
 		}
 	}
 	else if (yourCardVal === oppoCardVal) {
-		console.log("WAR!");
+		$("#declare-war").html("<h2>WAR BREAKS OUT</h2>");
 		$("#march").css("display", "inline");
 		$("#start").css("display", "none");
 		$("#march").on("click", wageWar);
+		$("#results").empty();
 	}
 }
 
 function wageWar() {
 	$("#march").css("display", "none");
-	// $("#retreat").css("display", "inline");
 	$("#you").append(yourDeck[1]);
 	$("#you").append(yourDeck[2]);
 	$("#you").append(yourDeck[3]);
@@ -151,13 +150,10 @@ function wageWar() {
 	oppoDeck.splice(1, 3);
 	oppoCard = $(".card").eq(7).text();
 	$("#start").css("display", "inline");
+
+	$("#declare-war").html("<h2>War resolved ... for now</h2>");;
 	
 	whoWins(yourCard, oppoCard);
-	// $("#retreat").on("click"), function() {
-	// 	$("#you").empty();
-	// 	$("#oppo").empty();
-	// 	regularPlay();
-	// }
 }
 
 function emptyCards() {

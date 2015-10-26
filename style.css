@@ -65,8 +65,13 @@ button {
 	display: none;
 }
 
-#retreat{
-	display: none;
+#declare-war {
+	color: red;
+	text-align: center;
+}
+
+#results {
+	margin: 10px 25px 10px 15px;
 }
 
 p {
