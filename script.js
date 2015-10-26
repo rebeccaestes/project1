@@ -52,13 +52,13 @@ var yourCardVal, oppoCardVal, yourCard, oppoCard;
 $("#start").on("click", regularPlay)
 
 function regularPlay(){
-	$("#you").empty();
+	emptyCards();
+	$("#retreat").css("display", "none");
 	$("#you").append("<h3>Your Play:</h3>" + yourDeck[0]);
 	// discards.push(deck[randomIndex]);
 	// deck.splice(randomIndex,1);
 	yourCard = $(".card").eq(0).text();
 
-	$("#oppo").empty();
 	$("#oppo").append("<h3>Opponent's Play:</h3>" + oppoDeck[0]);
 	// discards.push(deck[randomIndex]);
 	// deck.splice(randomIndex,1);
@@ -138,7 +138,7 @@ function whoWins(yourCard, oppoCard) {
 
 function wageWar() {
 	$("#march").css("display", "none");
-	$("#retreat").css("display", "inline");
+	// $("#retreat").css("display", "inline");
 	$("#you").append(yourDeck[1]);
 	$("#you").append(yourDeck[2]);
 	$("#you").append(yourDeck[3]);
@@ -150,13 +150,17 @@ function wageWar() {
 	$("#oppo").append(oppoDeck[3]);
 	oppoDeck.splice(1, 3);
 	oppoCard = $(".card").eq(7).text();
-	// $("#start").css("display", "none");
+	$("#start").css("display", "inline");
 	
 	whoWins(yourCard, oppoCard);
+	// $("#retreat").on("click"), function() {
+	// 	$("#you").empty();
+	// 	$("#oppo").empty();
+	// 	regularPlay();
+	// }
 }
 
-$("#retreat").on("click"), function() {
+function emptyCards() {
 	$("#you").empty();
 	$("#oppo").empty();
-	regularPlay();
 }
