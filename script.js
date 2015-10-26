@@ -141,12 +141,14 @@ function wageWar() {
 	$("#you").append("<div class='card'><p>cardback</p></div");
 	$("#you").append("<div class='card'><p>cardback</p></div");
 	$("#you").append(yourDeck[3]);
+	yourDeck.splice(1, 4);
 	yourCard = $(".card").eq(4).text();
 
 	$("#oppo").append("<div class='card'><p>cardback</p></div");
 	$("#oppo").append("<div class='card'><p>cardback</p></div");
 	$("#oppo").append("<div class='card'><p>cardback</p></div");
 	$("#oppo").append(oppoDeck[3]);
+	oppoDeck.splice(1, 4);
 	oppoCard = $(".card").eq(9).text();
 
 	whoWins(yourCard, oppoCard);
