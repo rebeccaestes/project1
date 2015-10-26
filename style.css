@@ -35,17 +35,37 @@ div.card {
 	background: linear-gradient(red, yellow);
 }
 
+.random {
+	display: block;
+}
+
 footer {
 	font-size: 10px;
 	padding-top: 30px;
 }
 
-img {
+button {
+	font-size: 12px;
+	width: 100px;
+	border: solid black 2px;
+	border-radius: 10px;
 	padding: 5px;
+	margin: 10px;
 }
 
 p {
-	padding: 5px;
+	padding: 2px 5px 2px 5px;
+}
+
+img {
+	padding: 3px;
+}
+
+div.pile {
+	padding: 20px;
+	float: left;
+	width: 150px;
+	display: block;
 }
 
 .cf:before, .cf:after {
