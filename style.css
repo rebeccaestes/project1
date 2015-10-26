@@ -3,3 +3,55 @@
   margin: 0;
   padding: 0;
 }
+
+body {
+	font-family: 'Lato'
+}
+
+div.card {
+	width: 100px;
+	height: 100px;
+	border: solid black 2px;
+	float: left;
+}
+
+#swords > .card {
+	background: peru;
+}
+
+#arrows > .card {
+	background: goldenrod;
+}
+
+#cannons > .card {
+	background: peachpuff;
+}
+
+#pistols > .card {
+	background: silver;
+}
+
+#jokers > .card {
+	background: linear-gradient(red, yellow);
+}
+
+footer {
+	font-size: 10px;
+	padding-top: 30px;
+}
+
+img {
+	padding: 5px;
+}
+
+p {
+	padding: 5px;
+}
+
+.cf:before, .cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+.cf:after {
+    clear: both;
+}
