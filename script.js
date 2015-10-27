@@ -56,7 +56,7 @@ var numClicks = 0;
 // when start button clicked ...
 
 function regularPlay() {
-// 	numClicks++;
+	numClicks++;
 // 	if (numClicks > 5) {
 // 		endGame();
 // 	}
@@ -77,16 +77,13 @@ function regularPlay() {
 	oppoCard = $(".card").eq(1).text();
 
 	whoWins(yourCard, oppoCard);
-	// console.log(numClicks);
+	console.log(numClicks);
+	return numClicks;
 }
 
 $("#start").on("click", regularPlay);
 
 function whoWins(yourCard, oppoCard) {
-
-	// if (click > 5) {
-	// 	endGame();
-
 	// assign values to each card
 		if (yourCard === "jack") {
 			yourCardVal = 11;
@@ -129,13 +126,14 @@ function whoWins(yourCard, oppoCard) {
 		if (yourCardVal > oppoCardVal) {
 			// if you win, all of the cards on display move to the end of your deck
 			var winner = "you";
-			$("#results").html("<p>Your " + yourCard + " is higher than your opponent's " + oppoCard + ", so you won these cards!</p><p>You have " + yourDeck.length +" cards, and your opponent has " + oppoDeck.length + ".</p>");
 			for (var i = 0; i < $(".card").length; i++) {
 				yourDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
 			}
 			// the cards and your opponent just played are removed from your decks
 			yourDeck.splice(0, 1);
 			oppoDeck.splice(0, 1);
+			$("#results").html("<p>Your " + yourCard + " is higher than your opponent's " + oppoCard + ", so you won these cards!</p><p>You have " + yourDeck.length +" cards, and your opponent has " + oppoDeck.length + ".</p>");
+
 			// if anyone's deck is empty
 			if (yourDeck[0] === undefined || oppoDeck[0] === undefined) {
 				$("#results").html("<h2>GAME OVER</h2>");
@@ -143,24 +141,27 @@ function whoWins(yourCard, oppoCard) {
 		}
 		else if (yourCardVal < oppoCardVal){
 			var winner = "opponent";
-			$("#results").html("<p>Your " + yourCard + " is lower than your opponent's " + oppoCard + ", so you lost these cards :(</p>");
 			for (var i = 0; i < $(".card").length; i++) {
 				oppoDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
 			}
 			yourDeck.splice(0, 1);
 			oppoDeck.splice(0, 1);
+			$("#results").html("<p>Your " + yourCard + " is lower than your opponent's " + oppoCard + ", so you lost these cards :(</p>");
 			if (yourDeck[0] === undefined || oppoDeck[0] === undefined) {
 				$("#results").html("<h2>GAME OVER</h2>");
 			}
 		}
 		else if (yourCardVal === oppoCardVal) {
 			// to start a war
-			$("#results").html("<h2>War breaks out!</h2>");
-			$("#march").css("display", "inline");
-			$("#start").css("display", "none");
-			$("#march").on("click", wageWar());
+			if (numClicks > 6) {
+				endGame();
+			} else {
+				$("#results").html("<h2>War breaks out!</h2>");
+				$("#march").css("display", "inline");
+				$("#start").css("display", "none");
+				$("#march").on("click", wageWar);
+			}
 		}
-		// return numClicks;
 }
 
 function endGame() {
