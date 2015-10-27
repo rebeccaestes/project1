@@ -60,7 +60,7 @@ function regularPlay(){
 
 	// clear board & prepare for play
 	$("#start").text("Continue playing");
-	$("#peacehover").empty();
+	$("#end").empty();
 	$("#you").empty();
 	$("#oppo").empty();
 	$("#you").append("<h3>Your Play:</h3>");
@@ -77,13 +77,9 @@ function regularPlay(){
 }
 
 function whoWins(yourCard, oppoCard) {
-	click++; 
-
-	if (click > 5) {
-		endGame();
+	click++;
 
 	// assign values to each card
-	} else {
 		if (yourCard === "jack") {
 			yourCardVal = 11;
 		}
@@ -148,6 +144,9 @@ function whoWins(yourCard, oppoCard) {
 			if (yourDeck[0] === undefined || oppoDeck[0] === undefined) {
 				$("#results").html("<h2>GAME OVER</h2>");
 			}
+			if (click > 5) {
+				endGame();
+			}
 		}
 		else if (yourCardVal === oppoCardVal) {
 			// to start a war
@@ -159,13 +158,13 @@ function whoWins(yourCard, oppoCard) {
 }
 
 function endGame() {
-	$("#results").append("<div id='end'><p><strong>Your enemy has called for a meeting</strong> ... Click to meet with them.</p></div>");
-	$("#continue").css("display", "inline");
+    $("#end").css("display", "inline");	
+    $("#continue").css("display", "inline");
 	$("#start").css("display", "none"); 
 	// upon click, clears playing field and determines who wins
 	$("#continue").on("click", function(){
 		$("#results").empty();
-		$("#h1").append("<div id='img-end'><img src='img/sword.png' alt='sword'><img src='img/arrow.png' alt='arrow'><img src='img/pistol.png' alt='pistol'><img src='img/cannon.png' alt='cannon'></div>")
+		$("h1").prepend("<div id='img-end'><img src='img/sword.png' alt='sword'><img src='img/arrow.png' alt='arrow'><img src='img/pistol.png' alt='pistol'><img src='img/cannon.png' alt='cannon'></div>");
 		$("#you").empty();
 		$("#oppo").empty();
 
@@ -173,16 +172,19 @@ function endGame() {
 			$("#results").html("<p><strong>After generations of violence, you have finally prevailed.</strong></p><p>With " + yourDeck.length + " cards, to your enemy's " + oppoDeck.length + ", your epic victory will be retold for centuries to come.</p>");
 		}
 		else if (yourDeck.length < oppoDeck.length) {
-			$("#results").html("<p><strong>After generations of violence, your people can take no more.</strong></p><p>With only " + yourDeck.length + " cards, to your enemy's " + oppoDeck.length + ", you are forced to accept defeat. The tragedy will be retold in whispers for centuries to come.<p>")
+			$("#results").html("<p><strong>After generations of violence, your people can take no more.</strong></p><p>With only " + yourDeck.length + " cards, to your enemy's " + oppoDeck.length + ", you are forced to accept defeat. The tragedy will be retold in whispers for centuries to come.</p>")
 		}
 		else {
-			$("#results").html("<p><strong>After generations of violence, you and your enemy are at a standstill.</strong></p><p>With each of you holding " + yourDeck.length + " cards, you and your enemy meet and decide to declare a truce. The diplomatic victory will be retold for centuries to come.<p>")
+			$("#results").html("<p><strong>After generations of violence, you and your enemy are at a standstill.</strong></p><p>With each of you holding " + yourDeck.length + " cards, you and your enemy meet and decide to declare a truce. The diplomatic victory will be retold for centuries to come.</p>")
 		}
+		// $("#results").append("<p><button id='again'>Play again?</button></p>");
+		// $("#again").on("click", location.reload());
 		$("#continue").css("display", "none");
 	})
 }
 
 function wageWar() {
+	$("#results").empty();
 	$("#march").css("display", "none");
 
 	// clears & prepares playing area
@@ -229,9 +231,8 @@ function wageWar() {
 	// run whoWins function; tell user they can hover
 	var winner = whoWins(yourCard, oppoCard);
 	if (winner === you) {
-		$("#peacehover").html("<p>Peace declared! Hover over the black cards to see which ones you won - and kept>:).</p>");
+		$("#results").append("<p>Peace declared! Hover over the black cards to see which ones you won - and kept>:).</p>");
 	} else {
-		$("#peacehover").html("<p>Peace declared ... but at what price? Hover over the black cards to see what you lost.</p>");
+		$("#results").append("<p>Peace has been declared ... but at what price? Hover over the black cards to see what you lost.</p>");
 	}
-}
 }
