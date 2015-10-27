@@ -70,6 +70,10 @@ button {
 	text-align: center;
 }
 
+#label {
+	text-align: center;
+}
+
 #results {
 	margin: 10px 25px 10px 15px;
 }
@@ -79,7 +83,11 @@ p {
 }
 
 img {
-	padding: 3px;
+	margin: 5px 15px 5px 15px;
+}
+
+h2 {
+	color: red;
 }
 
 div.pile {
