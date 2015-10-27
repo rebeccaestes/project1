@@ -7,19 +7,19 @@ var jokers = ["joker", "jester"];
 var deck = [];
 
 for (var i = 0; i < swords.length; i++) {
-	deck.push("<div class='card'><p id='label'>" + swords[i] + "</p><img src='img/sword.png' alt='sword'></div>");
+	deck.push("<div class='card' id='sword'><p id='label'>" + swords[i] + "</p><img src='img/sword.png' alt='sword'></div>");
 }
 for (var i = 0; i < arrows.length; i++) {
-	deck.push("<div class='card'><p id='label'>" + arrows[i] + "</p><img src='img/arrow.png' alt='arrow'></div>");
+	deck.push("<div class='card' id='arrow'><p id='label'>" + arrows[i] + "</p><img src='img/arrow.png' alt='arrow'></div>");
 }
 for (var i = 0; i < pistols.length; i++) {
-	deck.push("<div class='card'><p id='label'>" + pistols[i] + "</p><img src='img/pistol.png' alt='pistol'></div>");
+	deck.push("<div class='card' id='pistol'><p id='label'>" + pistols[i] + "</p><img src='img/pistol.png' alt='pistol'></div>");
 }
 for (var i = 0; i < cannons.length; i++) {
-	deck.push("<div class='card'><p id='label'>" + cannons[i] + "</p><img src='img/cannon.png' alt='canon'></div>");
+	deck.push("<div class='card' id='cannon'><p id='label'>" + cannons[i] + "</p><img src='img/cannon.png' alt='canon'></div>");
 }
 for (var i = 0; i < jokers.length; i++) {
-	deck.push("<div class='card'><p id='label'>" + jokers[i] + "</p><img src='img/joker.png' alt='jester-hat'></div>");
+	deck.push("<div class='card' id='joker'><p id='label'>" + jokers[i] + "</p><img src='img/joker.png' alt='jester-hat'></div>");
 }
 
 // var discards = []
@@ -49,9 +49,13 @@ var yourDeck = deck;
 
 var yourCardVal, oppoCardVal, yourCard, oppoCard;
 
+var click;
 $("#start").on("click", regularPlay)
 
 function regularPlay(){
+	click++
+	$("#start").text("Continue playing");
+	$("#peacehover").empty();
 	$("#you").empty();
 	$("#oppo").empty();
 	$("#you").append("<h3>Your Play:</h3>");
@@ -106,7 +110,8 @@ function whoWins(yourCard, oppoCard) {
 	}
 
 	if (yourCardVal > oppoCardVal) {
-		$("#results").html("<p>You won these cards!</p><p>You have " + yourDeck.length +" cards, and your opponent has " + oppoDeck.length + ".</p>");
+		var winner = "you";
+		$("#results").html("<p>Your " + yourCard + " is higher than your opponent's " + oppoCard + ", so you won these cards!</p><p>You have " + yourDeck.length +" cards, and your opponent has " + oppoDeck.length + ".</p>");
 		for (var i = 0; i < $(".card").length; i++) {
 			yourDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
 		}
@@ -117,7 +122,8 @@ function whoWins(yourCard, oppoCard) {
 		}
 	}
 	else if (yourCardVal < oppoCardVal){
-		$("#results").html("<p>You lost these cards :(</p>");
+		var winner = "opponent";
+		$("#results").html("<p>Your " + yourCard + " is lower than your opponent's " + oppoCard + ", so you lost these cards :(</p>");
 		for (var i = 0; i < $(".card").length; i++) {
 			oppoDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
 		}
@@ -134,12 +140,17 @@ function whoWins(yourCard, oppoCard) {
 		$("#march").on("click", wageWar);
 		console.log(yourDeck[0], yourDeck[1], yourDeck[2], yourDeck[3]);
 	}
+	return winner;
 }
 
 function wageWar() {
 	$("#march").css("display", "none");
 
 	$("#you").empty();
+	$("#oppo").empty();
+
+	$("#you").append("<h3>Your Play:</h3>");
+	$("#oppo").append("<h3>Opponent's Play:</h3>");
 
 	$("#you").append(yourDeck[0]);
 	$("#you").append(yourDeck[1]);
@@ -148,6 +159,9 @@ function wageWar() {
 	$("#you").append(yourDeck[4]);
 	yourDeck.splice(0, 4);
 	yourCard = $(".card").eq(4).text();
+	for (var i = 1; i < 4; i++) {
+		$(".card").eq(i).css("background", "black").addClass("lost");
+	}
 
 	$("#oppo").append(oppoDeck[0]);
 	$("#oppo").append(oppoDeck[1]);
@@ -156,11 +170,28 @@ function wageWar() {
 	$("#oppo").append(oppoDeck[4]);
 	oppoDeck.splice(0, 4);
 	oppoCard = $(".card").eq(9).text();
+	for (var i = 6; i < 9; i++) {
+		$(".card").eq(i).css("background", "black").addClass("lost");
+	}
+
+	$(".lost").hover( function() {
+		$(this).css("background", "grey");
+	},
+	function() {
+			$(this).css("background", "black");
+	})
 
 	$("#start").css("display", "inline");
 
-	$("#results").html("<h3>Peace declared ... for now</h3>");
+	var winner = whoWins(yourCard, oppoCard);
+
+	if (winner === you) {
+		$("#peacehover").html("<p>Peace declared! Hover over the black cards to see which ones you won - and kept>:).</p>");
+	} else {
+		$("#peacehover").html("<p>Peace declared ... but at what price? Hover over the black cards to see what you lost.</p>");
+	}
+
+	// }
 	
-	whoWins(yourCard, oppoCard);
 
 }

@@ -19,23 +19,23 @@ div.card {
 	display: inline;
 }
 
-#swords > .card {
+#sword {
 	background: peru;
 }
 
-#arrows > .card {
+#arrow {
 	background: goldenrod;
 }
 
-#cannons > .card {
-	background: peachpuff;
+#cannon {
+	background: brown;
 }
 
-#pistols > .card {
-	background: silver;
+#pistol {
+	background: slategrey;
 }
 
-#jokers > .card {
+#joker {
 	background: linear-gradient(red, yellow);
 }
 
@@ -53,12 +53,13 @@ cardDown {
 }
 
 button {
-	font-size: 12px;
+	font-size: 14px;
 	width: 150px;
 	border: solid black 2px;
 	border-radius: 10px;
 	padding: 5px;
-	margin: 10px;
+	margin: 15px;
+	font-family: 'Lato'
 }
 
 #march {
@@ -74,7 +75,7 @@ button {
 	text-align: center;
 }
 
-#results {
+#results, #peacehover{
 	margin: 10px 25px 10px 15px;
 }
 
@@ -107,4 +108,8 @@ div.pile {
 }
 .cf:after {
     clear: both;
+}
+
+.lost:hover {
+	background: grey;
 }
