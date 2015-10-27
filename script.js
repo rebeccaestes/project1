@@ -54,14 +54,13 @@ var yourCardVal, oppoCardVal, yourCard, oppoCard;
 var numClicks = 0;
 
 // when start button clicked ...
-$("#start").on("click", regularPlay)
 
-function regularPlay(){
-	numClicks++;
-	if (numClicks > 5) {
-		endGame();
-	}
-else {
+function regularPlay() {
+// 	numClicks++;
+// 	if (numClicks > 5) {
+// 		endGame();
+// 	}
+// else {
 	// clear board & prepare for play
 	$("#start").text("Continue playing");
 	$("#peacehover").empty();
@@ -78,9 +77,10 @@ else {
 	oppoCard = $(".card").eq(1).text();
 
 	whoWins(yourCard, oppoCard);
-	console.log(numClicks);
+	// console.log(numClicks);
 }
-}
+
+$("#start").on("click", regularPlay);
 
 function whoWins(yourCard, oppoCard) {
 
@@ -188,7 +188,7 @@ function endGame() {
 			})
 }
 
-function wageWar(click) {
+function wageWar() {
 		$("#march").css("display", "none");
 
 		// clears & prepares playing area
