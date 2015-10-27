@@ -49,11 +49,11 @@ var yourDeck = deck;
 
 var yourCardVal, oppoCardVal, yourCard, oppoCard;
 
-var click;
+var click = 0;
 $("#start").on("click", regularPlay)
 
 function regularPlay(){
-	click++
+	click++;
 	$("#start").text("Continue playing");
 	$("#peacehover").empty();
 	$("#you").empty();
@@ -70,7 +70,7 @@ function regularPlay(){
 	whoWins(yourCard, oppoCard);
 }
 
-function whoWins(yourCard, oppoCard) {
+function whoWins(yourCard, oppoCard, click) {
 	if (yourCard === "jack") {
 		yourCardVal = 11;
 	}
@@ -140,7 +140,25 @@ function whoWins(yourCard, oppoCard) {
 		$("#march").on("click", wageWar);
 		console.log(yourDeck[0], yourDeck[1], yourDeck[2], yourDeck[3]);
 	}
+
+	if (click > 5) {
+		endWar();
+	} else {
 	return winner;
+	}
+}
+
+function endWar() {
+	if (yourDeck.length > oppoDeck.length) {
+		$("#results").html("<p><strong>After generations of violence, you have finally prevailed.</strong></p><p>With " + yourDeck.length + " cards, to your enemy's " + oppoDeck.length + ", your epic victory will be retold for centuries to come.</p>");
+	}
+	else if (yourDeck.length < oppoDeck.length) {
+		$("#results").html("<p><strong>After generations of violence, your people can take no more.</strong></p><p>With only" + yourDeck.length + " cards, to your enemy's " + oppoDeck.length + ", you are forced to accept defeat. The tragedy will be retold in whispers for centuries to come.<p>")
+	}
+	else {
+		$("#results").html("<p><strong>After generations of violence, you and your enemy are at a standstill.</strong></p><p>With each of you holding " + yourDeck.length + " cards, you and your enemy meet and decide to declare a truce. The diplomatic victory will be retold for centuries to come.<p>")
+
+	}
 }
 
 function wageWar() {

@@ -8,6 +8,15 @@ body {
 	font-family: 'Lato'
 }
 
+h1 {
+	text-align: center;
+}
+
+div.subheader {
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
 div.card {
 	width: 100px;
 	height: 100px;
@@ -89,6 +98,10 @@ img {
 
 h2 {
 	color: red;
+}
+
+h3 {
+	padding-bottom: 5px;
 }
 
 div.pile {
