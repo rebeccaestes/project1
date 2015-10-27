@@ -3,117 +3,94 @@
   margin: 0;
   padding: 0;
 }
-
 body {
-	font-family: 'Lato';
+  font-family: 'Lato';
 }
-
 h1 {
-	text-align: center;
-	margin-top: 50px;
-	margin-bottom: 30px;
-	padding: 20px;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  padding: 20px;
 }
-
-.pile {
-	padding: 20px;
-	float: left;
-	width: 150px;
-	display: block;
+div.pile {
+  padding: 20px;
+  float: left;
+  width: 150px;
+  display: block;
 }
-
 div.card {
-	width: 100px;
-	height: 100px;
-	border: solid black 2px;
-	float: left;
+  width: 100px;
+  height: 100px;
+  border: solid black 2px;
+  float: left;
 }
-
 #sword {
-	background: peru;
+  background: peru;
 }
-
 #arrow {
-	background: goldenrod;
+  background: goldenrod;
 }
-
 #cannon {
-	background: brown;
+  background: brown;
 }
-
 #pistol {
-	background: slategrey;
+  background: slategrey;
 }
-
 #joker {
-	background: linear-gradient(red, yellow);
+  background: linear-gradient(red, yellow);
 }
-
 .cf:before, .cf:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
 }
 .cf:after {
-    clear: both;
+  clear: both;
 }
-
-#results, #peace {
-	margin: 10px 25px 10px 15px;
+#results, #peacehover, #meeting {
+  margin: 10px 25px 10px 15px;
 }
-
-#end {
-	display: none;
-}
-
 button {
-	font-size: 14px;
-	width: 150px;
-	border: solid black 2px;
-	border-radius: 10px;
-	padding: 5px;
-	margin: 15px;
-	font-family: 'Lato'
+  font-size: 14px;
+  width: 150px;
+  border: solid black 2px;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 15px;
+  font-family: 'Lato'
 }
-
 #march, #continue {
-	display: none;
+  display: none;
 }
-
 #end-img {
-	margin-top: 20px;
-	margin-left: auto;
-	margin-right: auto;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
-
 footer {
-	font-size: 10px;
-	padding-top: 30px;
+  font-size: 10px;
+  padding-top: 30px;
 }
-
 #label {
-	text-align: center;
+  text-align: center;
 }
-
 p {
-	padding: 2px 5px 2px 5px;
+  padding: 2px 5px 2px 5px;
 }
-
 img {
-	margin: 5px 15px 5px 15px;
+  margin: 5px 15px 5px 15px;
 }
-
 h2 {
-	color: red;
+  color: red;
+  font-size: 20px;
 }
-
 h3 {
-	padding-bottom: 5px;
+  padding-bottom: 5px;
 }
-
 #continue {
-	display: none;
+  display: none;
 }
-
-/*.lost:hover {
-	background: grey;
-}*/
+.lost:hover {
+  background: grey;
+}

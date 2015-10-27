@@ -51,16 +51,20 @@ var yourDeck = deck;
 
 var yourCardVal, oppoCardVal, yourCard, oppoCard;
 
-var click = 0;
+var numClicks = 0;
 
 // when start button clicked ...
 $("#start").on("click", regularPlay)
 
 function regularPlay(){
-
+	numClicks++;
+	if (numClicks > 5) {
+		endGame();
+	}
+else {
 	// clear board & prepare for play
 	$("#start").text("Continue playing");
-	$("#end").empty();
+	$("#peacehover").empty();
 	$("#you").empty();
 	$("#oppo").empty();
 	$("#you").append("<h3>Your Play:</h3>");
@@ -74,10 +78,14 @@ function regularPlay(){
 	oppoCard = $(".card").eq(1).text();
 
 	whoWins(yourCard, oppoCard);
+	console.log(numClicks);
+}
 }
 
 function whoWins(yourCard, oppoCard) {
-	click++;
+
+	// if (click > 5) {
+	// 	endGame();
 
 	// assign values to each card
 		if (yourCard === "jack") {
@@ -144,95 +152,91 @@ function whoWins(yourCard, oppoCard) {
 			if (yourDeck[0] === undefined || oppoDeck[0] === undefined) {
 				$("#results").html("<h2>GAME OVER</h2>");
 			}
-			if (click > 5) {
-				endGame();
-			}
 		}
 		else if (yourCardVal === oppoCardVal) {
 			// to start a war
 			$("#results").html("<h2>War breaks out!</h2>");
 			$("#march").css("display", "inline");
 			$("#start").css("display", "none");
-			$("#march").on("click", wageWar);
+			$("#march").on("click", wageWar());
 		}
+		// return numClicks;
 }
 
 function endGame() {
-    $("#end").css("display", "inline");	
-    $("#continue").css("display", "inline");
-	$("#start").css("display", "none"); 
-	// upon click, clears playing field and determines who wins
-	$("#continue").on("click", function(){
-		$("#results").empty();
-		$("h1").prepend("<div id='img-end'><img src='img/sword.png' alt='sword'><img src='img/arrow.png' alt='arrow'><img src='img/pistol.png' alt='pistol'><img src='img/cannon.png' alt='cannon'></div>");
-		$("#you").empty();
-		$("#oppo").empty();
+		$("#meeting").html("<p><strong>Your enemy has called for a meeting</strong> ... Click to meet with them.</p>");
+		$("#continue").css("display", "inline");
+		$("#start").css("display", "none"); 
+		// upon click, clears playing field and determines who wins
+		$("#continue").on("click", function(){
+			$("#results").empty();
+			$("#meeting").empty();
+			$("#peacehover").empty();
+			$("#you").empty();
+			$("#oppo").empty();
 
-		if (yourDeck.length > oppoDeck.length) {
-			$("#results").html("<p><strong>After generations of violence, you have finally prevailed.</strong></p><p>With " + yourDeck.length + " cards, to your enemy's " + oppoDeck.length + ", your epic victory will be retold for centuries to come.</p>");
-		}
-		else if (yourDeck.length < oppoDeck.length) {
-			$("#results").html("<p><strong>After generations of violence, your people can take no more.</strong></p><p>With only " + yourDeck.length + " cards, to your enemy's " + oppoDeck.length + ", you are forced to accept defeat. The tragedy will be retold in whispers for centuries to come.</p>")
-		}
-		else {
-			$("#results").html("<p><strong>After generations of violence, you and your enemy are at a standstill.</strong></p><p>With each of you holding " + yourDeck.length + " cards, you and your enemy meet and decide to declare a truce. The diplomatic victory will be retold for centuries to come.</p>")
-		}
-		// $("#results").append("<p><button id='again'>Play again?</button></p>");
-		// $("#again").on("click", location.reload());
-		$("#continue").css("display", "none");
-	})
+			if (yourDeck.length > oppoDeck.length) {
+				$("#results").html("<p><strong>After generations of violence, you have finally prevailed.</strong></p><p>With " + yourDeck.length + " cards to your enemy's " + oppoDeck.length + ", your epic victory will be retold for centuries to come.</p>");
+			}
+			else if (yourDeck.length < oppoDeck.length) {
+				$("#results").html("<p><strong>After generations of violence, your people can take no more.</strong></p><p>With only " + yourDeck.length + " cards to your enemy's " + oppoDeck.length + ", you are forced to accept defeat. The tragedy will be retold in whispers for centuries to come.<p>")
+			}
+			else {
+				$("#results").html("<p><strong>After generations of violence, you and your enemy are at a standstill.</strong></p><p>With each of you holding " + yourDeck.length + " cards, you and your enemy meet and decide to declare a truce. The diplomatic victory will be retold for centuries to come.<p>")
+			}
+			$("#continue").css("display", "none");
+			})
 }
 
-function wageWar() {
-	$("#results").empty();
-	$("#march").css("display", "none");
+function wageWar(click) {
+		$("#march").css("display", "none");
 
-	// clears & prepares playing area
-	$("#you").empty();
-	$("#oppo").empty();
-	$("#you").append("<h3>Your Play:</h3>");
-	$("#oppo").append("<h3>Opponent's Play:</h3>");
+		// clears & prepares playing area
+		$("#you").empty();
+		$("#oppo").empty();
+		$("#you").append("<h3>Your Play:</h3>");
+		$("#oppo").append("<h3>Opponent's Play:</h3>");
 
-	// puts the card you just played, plus three more, plus one card that will determine the winner
-	$("#you").append(yourDeck[0]);
-	$("#you").append(yourDeck[1]);
-	$("#you").append(yourDeck[2]);
-	$("#you").append(yourDeck[3]);
-	$("#you").append(yourDeck[4]);
-	// remove those 5 cards from your deck
-	yourDeck.splice(0, 4);
-	yourCard = $(".card").eq(4).text();
-	// three cards in the middle don't immediately display
-	for (var i = 1; i < 4; i++) {
-		$(".card").eq(i).css("background", "black").addClass("lost");
-	}
+		// puts the card you just played, plus three more, plus one card that will determine the winner
+		$("#you").append(yourDeck[0]);
+		$("#you").append(yourDeck[1]);
+		$("#you").append(yourDeck[2]);
+		$("#you").append(yourDeck[3]);
+		$("#you").append(yourDeck[4]);
+		// remove those 5 cards from your deck
+		yourDeck.splice(0, 4);
+		yourCard = $(".card").eq(4).text();
+		// three cards in the middle don't immediately display
+		for (var i = 1; i < 4; i++) {
+			$(".card").eq(i).css("background", "black").addClass("lost");
+		}
 
-	$("#oppo").append(oppoDeck[0]);
-	$("#oppo").append(oppoDeck[1]);
-	$("#oppo").append(oppoDeck[2]);
-	$("#oppo").append(oppoDeck[3]);
-	$("#oppo").append(oppoDeck[4]);
-	oppoDeck.splice(0, 4);
-	oppoCard = $(".card").eq(9).text();
-	for (var i = 6; i < 9; i++) {
-		$(".card").eq(i).css("background", "black").addClass("lost");
-	}
+		$("#oppo").append(oppoDeck[0]);
+		$("#oppo").append(oppoDeck[1]);
+		$("#oppo").append(oppoDeck[2]);
+		$("#oppo").append(oppoDeck[3]);
+		$("#oppo").append(oppoDeck[4]);
+		oppoDeck.splice(0, 4);
+		oppoCard = $(".card").eq(9).text();
+		for (var i = 6; i < 9; i++) {
+			$(".card").eq(i).css("background", "black").addClass("lost");
+		}
 
-	// hover over the middle cards to see their values
-	$(".lost").hover( function() {
-		$(this).css("background", "grey");
-	},
-	function() {
-			$(this).css("background", "black");
-	})
+		// hover over the middle cards to see their values
+		$(".lost").hover( function() {
+			$(this).css("background", "grey");
+		},
+		function() {
+				$(this).css("background", "black");
+		})
 
-	$("#start").css("display", "inline");
+		$("#start").css("display", "inline");
 
-	// run whoWins function; tell user they can hover
-	var winner = whoWins(yourCard, oppoCard);
-	if (winner === you) {
-		$("#results").append("<p>Peace declared! Hover over the black cards to see which ones you won - and kept>:).</p>");
-	} else {
-		$("#results").append("<p>Peace has been declared ... but at what price? Hover over the black cards to see what you lost.</p>");
-	}
+		// run whoWins function; tell user they can hover
+		var winner = whoWins(yourCard, oppoCard);
+		if (winner === you) {
+			$("#peacehover").html("<p>Peace declared! Hover over the black cards to see which ones you won - and kept>:).</p>");
+		} else {
+			$("#peacehover").html("<p>Peace declared ... but at what price? Hover over the black cards to see what you lost.</p>");
+		}
 }
