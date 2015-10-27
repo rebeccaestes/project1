@@ -5,16 +5,21 @@
 }
 
 body {
-	font-family: 'Lato'
+	font-family: 'Lato';
 }
 
 h1 {
 	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 30px;
+	padding: 20px;
 }
 
-div.subheader {
-	margin-left: 20%;
-	margin-right: 20%;
+div.pile {
+	padding: 20px;
+	float: left;
+	width: 150px;
+	display: block;
 }
 
 div.card {
@@ -22,10 +27,6 @@ div.card {
 	height: 100px;
 	border: solid black 2px;
 	float: left;
-}
-
-#start {
-	display: inline;
 }
 
 #sword {
@@ -48,17 +49,16 @@ div.card {
 	background: linear-gradient(red, yellow);
 }
 
-.random {
-	display: block;
+.cf:before, .cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+.cf:after {
+    clear: both;
 }
 
-footer {
-	font-size: 10px;
-	padding-top: 30px;
-}
-
-cardDown {
-
+#results, #peacehover{
+	margin: 10px 25px 10px 15px;
 }
 
 button {
@@ -71,21 +71,23 @@ button {
 	font-family: 'Lato'
 }
 
-#march {
+#march, #continue {
 	display: none;
 }
 
-#declare-war {
-	color: red;
-	text-align: center;
+#end-img {
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+footer {
+	font-size: 10px;
+	padding-top: 30px;
 }
 
 #label {
 	text-align: center;
-}
-
-#results, #peacehover{
-	margin: 10px 25px 10px 15px;
 }
 
 p {
@@ -104,23 +106,8 @@ h3 {
 	padding-bottom: 5px;
 }
 
-div.pile {
-	padding: 20px;
-	float: left;
-	width: 150px;
-	display: block;
-}
-
 #continue {
 	display: none;
-}
-
-.cf:before, .cf:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
-}
-.cf:after {
-    clear: both;
 }
 
 .lost:hover {
