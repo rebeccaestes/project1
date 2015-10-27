@@ -9,10 +9,9 @@ GA Project 1: War
 NOTES, AFTER COMPLETING PROJECT
 A lot of these were not MVP. I completed #1 and #2, but the others would have taken too long. What I didn't foresee was that, in my many rounds of testing, I never actually won a game, until I prompted the endGame function to run when a certain number of rounds and wars had occurred.
 
-Technologies used:
+Technologies used/comments on code:
 - I first compiled each suit (plus jokers), and then pushed each item into an array of the whole deck. This is because when I first started coding, I had the entire deck laid out on the screen, so I could add the images, format them correctly, etc. 
-- After spending a morning trying to get the deck to shuffle and realizing I was on the entirely wrong track, I usedone I found on stackoverflow. Hope that isn't cheating.
-- Then I divide the shuffled deck into yourDeck and oppoDeck, by splicing
+- Then the deck shuffles, and I divide the shuffled deck into yourDeck and oppoDeck, by splicing
 - I track numClicks and wars, in order to know when the game should end.
 - on("click")s to start a game, continue to the next round, etc. the regularPlay function records numClicks, and the cards you and your opponent pulled, before calling whoWins.
 - whoWins assigns values to the face cards, and parseInts the number cards. It then compares them all to decide who wins, and tells you. It also tells you how many cards you and your opponent each have.

@@ -24,27 +24,8 @@ for (var i = 0; i < jokers.length; i++) {
   deck.push("<div class='card' id='joker'><p id='label'>" + jokers[i] + "</p><img src='img/joker.png' alt='jester-hat'></div>");
 }
 
-// shuffle functon found on stack overflow:
-function shuffle(array) {
-  var currentIndex = array.length,
-    temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
-}
-
-shuffle(deck);
+// shuffle deck
+deck.sort(function() { return 0.5 - Math.random() });
 
 // Split deck in half
 var oppoDeck = deck.splice(deck.length / 2, deck.length / 2);
@@ -55,8 +36,9 @@ var yourCardVal, oppoCardVal, yourCard, oppoCard;
 var numClicks = 0;
 var wars = 0;
 
-// when start button clicked ...
+$("#start").on("click", regularPlay);
 
+// when start button clicked ...
 function regularPlay() {
   numClicks++;
 
@@ -76,11 +58,8 @@ function regularPlay() {
   oppoCard = $(".card").eq(1).text();
 
   whoWins(yourCard, oppoCard);
-  console.log(numClicks);
   return numClicks;
 }
-
-$("#start").on("click", regularPlay);
 
 function whoWins(yourCard, oppoCard) {
   // assign values to each card
@@ -118,15 +97,15 @@ function whoWins(yourCard, oppoCard) {
     for (var i = 0; i < $(".card").length; i++) {
       yourDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
     }
-    // the cards and your opponent just played are removed from your decks
+    // the cards and your opponent just played are removed from your decks; tells user the size of each deck
     yourDeck.splice(0, 1);
     oppoDeck.splice(0, 1);
     $("#results").html("<p>Your " + yourCard + " is higher than your opponent's " + oppoCard + ", so you won these cards!</p><p>You have " + yourDeck.length + " cards, and your opponent has " + oppoDeck.length + ".</p>");
-
     // if anyone's deck is empty
     if (yourDeck[0] === undefined || oppoDeck[0] === undefined) {
       $("#results").html("<h2>GAME OVER</h2>");
     }
+
   } else if (yourCardVal < oppoCardVal) {
     var winner = "opponent";
     for (var i = 0; i < $(".card").length; i++) {
@@ -138,6 +117,7 @@ function whoWins(yourCard, oppoCard) {
     if (yourDeck[0] === undefined || oppoDeck[0] === undefined) {
       $("#results").html("<h2>GAME OVER</h2>");
     }
+
   } else if (yourCardVal === oppoCardVal) {
     // if they've clicked at least 10 times, and had at least 1 war, end the game
     if (numClicks > 10 && wars > 0) {
