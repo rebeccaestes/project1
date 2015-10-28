@@ -102,8 +102,8 @@ function whoWins(yourCard, oppoCard) {
 
   if (yourCardVal > oppoCardVal) {
     // if you win, all of the cards on display move to the end of your deck
-    // var winner = "you";
     for (var i = 0; i < $(".card").length; i++) {
+      // this if statement removes the 'facedown' class, if it was added during a war
       if ($(".card").eq(i).hasClass("facedown")) {
         $(".card").eq(i).removeClass("facedown");
       }
@@ -126,7 +126,6 @@ function whoWins(yourCard, oppoCard) {
     // return winner;
 
   } else if (yourCardVal < oppoCardVal) {
-    // var winner = "opponent";
     for (var i = 0; i < $(".card").length; i++) {
       if ($(".card").eq(i).hasClass("facedown")) {
         $(".card").eq(i).removeClass("facedown");
@@ -185,12 +184,6 @@ function endGame() {
     }
     $("#continue").css("display", "none");
   })
-}
-
-function annihilate() {
-  $("body").empty()
-  $("body").append("<h1>Total annihilation</h1>");
-  $("body").append("<img id='explode' src='img/annihilation.jpg'>")
 }
 
 function wageWar() {
@@ -262,12 +255,17 @@ function jesterPlay(yourCard, oppoCard, yourCardVal, oppoCardVal) {
     return oppoCardVal;
 
   // But if you both play a jester or a joker, you self-destruct.
-  // (I couldn't get the start button to actually go away though ...)
   } else  if ((yourCard === "jester" || yourCard === "joker") && (oppoCard === "jester" || oppoCard === "joker")) {
     $("#results").html("<p>Of all the risks in the Game of War ... the most dangerous and deadly of all is pitting two jokers or jesters against each other.</p>");
     $("#start").css("display", "none");
     $("#peril").css("display", "inline");
     $("#peril").on("click", annihilate);
-
   }
+}
+
+
+function annihilate() {
+  $("body").empty()
+  $("body").append("<h1>Total annihilation</h1>");
+  $("body").append("<img id='explode' src='img/annihilation.jpg'>")
 }

@@ -32,4 +32,3 @@ Problems/bugs:
 - I wanted to put all four of the suit images in a row at the end, but they wouldn't center, maybe because I was appending them to a non-centered div ...
 - If the 5th cards each player plays during a war also match, it plays another war (on a new screen), but the top 2 cards are new ones, not the original matched pair. 
 - The exception to the above rule is if the 5th cards in a war are both jokers - then it moves striaght to the joker vs. joker scenario. 
-- In any joker vs. joker scenario, I couldn't get the "Continue" button to disappear, although it doesn't do anything if you click it.
