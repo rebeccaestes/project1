@@ -9,19 +9,19 @@ var jokers = ["joker", "jester"];
 
 // Make deck, with card formatting
 for (var i = 0; i < swords.length; i++) {
-  deck.push("<div class='card' id='sword'><p id='label'>" + swords[i] + "</p><img src='img/sword.png' alt='sword'></div>");
+  deck.push("<div class='card sword'><p id='label'>" + swords[i] + "</p><img src='img/sword.png' alt='sword'></div>");
 }
 for (var i = 0; i < arrows.length; i++) {
-  deck.push("<div class='card' id='arrow'><p id='label'>" + arrows[i] + "</p><img src='img/arrow.png' alt='arrow'></div>");
+  deck.push("<div class='card arrow'><p id='label'>" + arrows[i] + "</p><img src='img/arrow.png' alt='arrow'></div>");
 }
 for (var i = 0; i < pistols.length; i++) {
-  deck.push("<div class='card' id='pistol'><p id='label'>" + pistols[i] + "</p><img src='img/pistol.png' alt='pistol'></div>");
+  deck.push("<div class='card pistol'><p id='label'>" + pistols[i] + "</p><img src='img/pistol.png' alt='pistol'></div>");
 }
 for (var i = 0; i < cannons.length; i++) {
-  deck.push("<div class='card' id='cannon'><p id='label'>" + cannons[i] + "</p><img src='img/cannon.png' alt='canon'></div>");
+  deck.push("<div class='card cannon'><p id='label'>" + cannons[i] + "</p><img src='img/cannon.png' alt='cannon'></div>");
 }
 for (var i = 0; i < jokers.length; i++) {
-  deck.push("<div class='card' id='joker'><p id='label'>" + jokers[i] + "</p><img src='img/joker.png' alt='jester-hat'></div>");
+  deck.push("<div class='card joker'><p id='label'>" + jokers[i] + "</p><img src='img/joker.png' alt='jester-hat'></div>");
 }
 
 // shuffle deck
@@ -33,7 +33,7 @@ deck.sort(function() {
 var oppoDeck = deck.splice(deck.length / 2, deck.length / 2);
 var yourDeck = deck;
 
-var yourCardVal, oppoCardVal, yourCard, oppoCard;
+var yourCardVal, oppoCardVal, yourCard, oppoCard, cardClasses;
 
 var numClicks = 0;
 var wars = 0;
@@ -65,6 +65,7 @@ function regularPlay() {
 
 function whoWins(yourCard, oppoCard) {
   // assign values to each card
+
   if (yourCard === "jack") {
     yourCardVal = 11;
   } else if (yourCard === "queen") {
@@ -103,7 +104,11 @@ function whoWins(yourCard, oppoCard) {
     // if you win, all of the cards on display move to the end of your deck
     // var winner = "you";
     for (var i = 0; i < $(".card").length; i++) {
-      yourDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
+      if ($(".card").eq(i).hasClass("facedown")) {
+        $(".card").eq(i).removeClass("facedown");
+      }
+      cardClasses = $(".card").eq(i).attr("class");
+      yourDeck.push("<div class='" + cardClasses + "'>" + $('.card').eq(i).html() + "</div>");
     }
     // the cards and your opponent just played are removed from your decks; tells user the size of each deck
     yourDeck.splice(0, 1);
@@ -123,7 +128,11 @@ function whoWins(yourCard, oppoCard) {
   } else if (yourCardVal < oppoCardVal) {
     // var winner = "opponent";
     for (var i = 0; i < $(".card").length; i++) {
-      oppoDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
+      if ($(".card").eq(i).hasClass("facedown")) {
+        $(".card").eq(i).removeClass("facedown");
+      }
+      cardClasses = $(".card").eq(i).attr("class");
+      yourDeck.push("<div class='" + cardClasses + "'>" + $('.card').eq(i).html() + "</div>");
     }
     yourDeck.splice(0, 1);
     oppoDeck.splice(0, 1);
@@ -203,7 +212,7 @@ function wageWar() {
   yourCard = $(".card").eq(4).text();
   // three cards in the middle don't immediately display
   for (var i = 1; i < 4; i++) {
-    $(".card").eq(i).css("background", "black").addClass("lost");
+    $(".card").eq(i).css("background", "black").addClass("facedown");
   }
 
   $("#oppo").append(oppoDeck[0]);
@@ -214,11 +223,11 @@ function wageWar() {
   oppoDeck.splice(0, 4);
   oppoCard = $(".card").eq(9).text();
   for (var i = 6; i < 9; i++) {
-    $(".card").eq(i).css("background", "black").addClass("lost");
+    $(".card").eq(i).css("background", "black").addClass("facedown");
   }
 
-  // hover over the middle cards to see their values
-  $(".lost").hover(function() {
+  // hover functionality for facedown cards
+  $(".facedown").hover(function() {
       $(this).css("background", "grey");
     },
     function() {
@@ -226,15 +235,7 @@ function wageWar() {
     })
 
   $("#start").css("display", "inline");
-
-  // run whoWins function; tell user they can hover
-  // var winner = whoWins(yourCard, oppoCard);
   whoWins(yourCard, oppoCard);
-  // if (winner === "you") {
-  //   $("#peacehover").html("<p>Peace declared! Hover over the black cards to see which ones you won - and kept>:).</p>");
-  // } else if (winner === "opponent") {
-  //   $("#peacehover").html("<p>Peace declared ... but at what price? Hover over the black cards to see what you lost.</p>");
-  // }
 }
 
 // If you play a joker or jester, you win the match, plus extra cards from your opponent. The number of extra cards is equal to the value of the card your opponent played against your joker/jester.
@@ -242,7 +243,7 @@ function jesterPlay(yourCard, oppoCard, yourCardVal, oppoCardVal) {
   if ((yourCard === "jester" || yourCard === "joker") && (oppoCard !== "jester" && oppoCard !== "joker")) {
     $("#results").html("<p>You played your " + yourCard + ", and your opponent played their " + oppoCard + "!  Because their " + oppoCard + " is worth " + oppoCardVal + " points, you win that many extra cards from your opponent!</p>");
     yourDeck.splice(0, 1);
-    yourDeck.push("<div class='card'>" + $('.card').eq(0).html() + "</div>");
+    yourDeck.push("<div class='card jester'>" + $('card').eq(0).html() + "</div>");
     for (var i = 0; i < oppoCardVal + 1; i++) {
       yourDeck.push(oppoDeck[i]);
     }
@@ -252,7 +253,7 @@ function jesterPlay(yourCard, oppoCard, yourCardVal, oppoCardVal) {
   } else  if ((yourCard !== "jester" && yourCard !== "joker") && (oppoCard === "jester" || oppoCard === "joker")) {
     $("#results").html("<p>You played your " + yourCard + ", but your opponent played their " + oppoCard + "! Because your " + yourCard + " is worth " + yourCardVal + " points, you have to give that many extra cards to your opponent :(</p>");
     oppoDeck.splice(0, 1);
-    oppoDeck.push("<div class='card'>" + $('.card').eq(1).html() + "</div>");
+    yourDeck.push("<div class='card jester'" + $('card').eq(1).html() + "</div>");
     for (var i = 0; i < yourCardVal + 1; i++) {
       oppoDeck.push(yourDeck[i]);
     }

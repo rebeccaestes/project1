@@ -27,19 +27,19 @@ div.card {
   border: solid black 2px;
   float: left;
 }
-#sword {
+.sword {
   background: peru;
 }
-#arrow {
+.arrow {
   background: goldenrod;
 }
-#cannon {
+.cannon {
   background: brown;
 }
-#pistol {
+.pistol {
   background: slategrey;
 }
-#joker {
+.joker {
   background: linear-gradient(red, yellow);
 }
 .cf:before, .cf:after {
