@@ -1,33 +1,42 @@
-GA Project 1: War
+THE GAME OF WAR
 
-1. As a player, I want to be able to play War against the computer, so that I can play War when I'm bored and alone.
-2. As a player, I want to be able to see how many cards I have and how many my opponent has, so I can see if I'm winning this match.
-3. As a player, I want to be able to view the results from each match, so I can see how many matches I've won this session.
-4. As a player, I want to be able to record the length of each match, so I can see how much time I'm wasting.
-5. As a player, I would like to play matches in groups of five, so that I don't waste more time than necessary playing War.
+http://rebeccaestes.github.io/project1/
 
-NOTES, AFTER COMPLETING PROJECT
-A lot of these were not MVP. I completed #1 and #2, but the others would have taken too long. What I didn't foresee was that, in my many rounds of testing, I never actually won a game, until I prompted the endGame function to run when a certain number of rounds and wars had occurred.
+Tips for manipulating play in the console:
 
-Technologies used:
-- I first compiled each suit (plus jokers), and then pushed each item into an array of the whole deck. This is because when I first started coding, I had the entire deck laid out on the screen, so I could add the images, format them correctly, etc. 
-- After spending a morning trying to get the deck to shuffle and realizing I was on the entirely wrong track, I usedone I found on stackoverflow. Hope that isn't cheating.
-- Then I divide the shuffled deck into yourDeck and oppoDeck, by splicing
-- I track numClicks and wars, in order to know when the game should end.
-- on("click")s to start a game, continue to the next round, etc. the regularPlay function records numClicks, and the cards you and your opponent pulled, before calling whoWins.
-- whoWins assigns values to the face cards, and parseInts the number cards. It then compares them all to decide who wins, and tells you. It also tells you how many cards you and your opponent each have.
-- If the cards are equal, then the code calls wageWar when you click on a button, UNLESS you have called regularPlay at least 10 times, in which case it calls endGame.
-- endGame has you click a button (to "meet with an emissary"), and compares yourDeck to oppoDeck to pick a final winner.
-- wageWar clears the deck, and then plays the card you just put down, plus 4 more. Whoever wins the 5th determines the winner of the war. The 3 in the middle are black because in the original game they're face down, but you can hover over them to see what they are.
+<ul><li>yourDeck and oppoDeck are arrays of each user's cards. You can force a war by setting cards of the same index to be equal in the console.</li>
+<li>Interesting things happen when the joker (or jester; they're equivalent) is played.</li>
+<li>Extra interesting things happen when two jokers are played against each other.</li>
+<li>There are two ways to end the game: 1. play more than 10 regular rounds, and at least one war; or 2. one player loses all their cards. Different things happen in each case.</li></ul>
 
-Problems:
-- I had a very hard time firguring out where to call endWar. It kept pushing together incorrect messages to the user.
-- I realized at the very end that the message telling the user how many cards they and their user had was using variables before the cards they'd played/won had been spliced/pushed from their deck.
-- I somehow managed to delete my Javascript link while validating my HTML template, breaking everything, and almost cried.
-- I wanted to put all four of the suit images in a row at the end, but they wouldn't center, maybe because I was appending them to a non-centered div ...
-- If the 5th cards each player plays during a war also match, it plays another war, but the top 2 cards are new ones, not the original ones that matched.
+- SPOILERS BELOW- 
 
+GA Project 1: War User Stories
+
+As a player, I want to be able to play War against the computer, so that I can play when I'm bored and alone.
+As a player, I want to be able to see how many cards I have and how many my opponent has, so I can see if I'm winning this match.
+As a player, I want the game to force an end after a certain number of rounds/a certain time, because games can go on forever and that's boring.
+As a player, I want the jokers to do something special, because the regular game of war is not always very interesting.
+As a developer, I want the layout of the game to look nice, because spending hours testing an ugly page is depressing.
+Technologies used/how I built the game:
+
+I first compiled each suit (plus a set of jokers, composed of a joker and a jester), and then pushed each item into an array of the whole deck. This is because when I first started coding, I laid out on the screen, so I could position the images, make sure I had a complete deck, etc.
+Then the deck shuffles, and I divide the shuffled deck into two halves, assigned to yourDeck and oppoDeck.
+I track numClicks and wars, in order to know if/when the game should end.
+Each card gets a value - 2 for a 2, 11 for a queen, etc. Jokers/jesters are special.
+Upon play, whoever's card has a higher value wins the two cards in play.
+If the two cards played have the same value, then three cards are played "face-down" on top of them, and then a final card, which determines the winner. The winner gets all 10 cards in play. Users can hover over the face-down cards to see what they were.
+If a user plays a jester, they win the two cards in play, plus their opponent has to give up an extra number of cards equal to the value of the card they played.
+If two users play a jester, they mutually destruct.
+Problems/bugs:
+
+I wanted to put all four of the suit images in a row at the end, but they wouldn't center, maybe because I was appending them to a non-centered div ...
+If the 5th cards each player plays during a war also match, it plays another war (on a new screen), but the top 2 cards are new ones, not the original matched pair.
+The exception to the above rule is if the 5th cards in a war are both jokers - then it moves striaght to the joker vs. joker scenario.
+In any joker vs. joker scenario, I couldn't get the "Continue" button to disappear, although it doesn't do anything if you click it.
+The class 'lost', which
 I included the joker originally because I wanted it joker to be a trump card that steals a number of cards from the opponent equal to the value of the card the opponent played, but didn't have the chance. But I liked the gradient I used on those cards so I kept it.
 
 Instructions/notes:
-- You can force the next round to be a war by putting 'yourDeck[0] = oppoDeck[0]' in the console.
+
+You can force the next round to be a war by putting 'yourDeck[0] = oppoDeck[0]' in the console
