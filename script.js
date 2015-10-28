@@ -190,6 +190,7 @@ function endGame() {
 function annihilate() {
   $("body").empty()
   $("body").append("<h1>Total annihilation</h1>");
+  $("body").append("<img id='explode' src='img/annihilation.jpg'>")
 }
 
 function wageWar() {
@@ -243,7 +244,7 @@ function jesterPlay(yourCard, oppoCard, yourCardVal, oppoCardVal) {
   if ((yourCard === "jester" || yourCard === "joker") && (oppoCard !== "jester" && oppoCard !== "joker")) {
     $("#results").html("<p>You played your " + yourCard + ", and your opponent played their " + oppoCard + "!  Because their " + oppoCard + " is worth " + oppoCardVal + " points, you win that many extra cards from your opponent!</p>");
     yourDeck.splice(0, 1);
-    yourDeck.push("<div class='card jester'>" + $('card').eq(0).html() + "</div>");
+    yourDeck.push("<div class='card jester'>" + $('.card').eq(0).html() + "</div>");
     for (var i = 0; i < oppoCardVal + 1; i++) {
       yourDeck.push(oppoDeck[i]);
     }
@@ -253,7 +254,7 @@ function jesterPlay(yourCard, oppoCard, yourCardVal, oppoCardVal) {
   } else  if ((yourCard !== "jester" && yourCard !== "joker") && (oppoCard === "jester" || oppoCard === "joker")) {
     $("#results").html("<p>You played your " + yourCard + ", but your opponent played their " + oppoCard + "! Because your " + yourCard + " is worth " + yourCardVal + " points, you have to give that many extra cards to your opponent :(</p>");
     oppoDeck.splice(0, 1);
-    yourDeck.push("<div class='card jester'" + $('card').eq(1).html() + "</div>");
+    yourDeck.push("<div class='card jester'" + $('.card').eq(1).html() + "</div>");
     for (var i = 0; i < yourCardVal + 1; i++) {
       oppoDeck.push(yourDeck[i]);
     }
