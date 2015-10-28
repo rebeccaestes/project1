@@ -25,7 +25,9 @@ for (var i = 0; i < jokers.length; i++) {
 }
 
 // shuffle deck
-deck.sort(function() { return 0.5 - Math.random() });
+deck.sort(function() { 
+  return 0.5 - Math.random();
+});
 
 // Split deck in half
 var oppoDeck = deck.splice(deck.length / 2, deck.length / 2);
@@ -72,7 +74,7 @@ function whoWins(yourCard, oppoCard) {
   } else if (yourCard === "ace") {
     yourCardVal = 14;
   } else if (yourCard === "jester" || yourCard === "joker") {
-    yourCardVal = 0;
+    yourCardVal = "exception";
   } else {
     yourCardVal = parseInt(yourCard);
   }
@@ -86,14 +88,20 @@ function whoWins(yourCard, oppoCard) {
   } else if (oppoCard === "ace") {
     oppoCardVal = 14;
   } else if (oppoCard === "jester" || oppoCard === "joker") {
-    oppoCardVal = 0;
+    oppoCardVal = "exception";
   } else {
     oppoCardVal = parseInt(oppoCard);
-  }
+  } 
+
+  // if you play a joker or a jester, something special should happen ...
+  if (yourCardVal === "exception" || oppoCardVal === "exception") {
+    jesterPlay(yourCard, oppoCard, yourCardVal, oppoCardVal);
+    return yourCardVal, oppoCardVal;
+  } 
 
   if (yourCardVal > oppoCardVal) {
     // if you win, all of the cards on display move to the end of your deck
-    var winner = "you";
+    // var winner = "you";
     for (var i = 0; i < $(".card").length; i++) {
       yourDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
     }
@@ -102,21 +110,33 @@ function whoWins(yourCard, oppoCard) {
     oppoDeck.splice(0, 1);
     $("#results").html("<p>Your " + yourCard + " is higher than your opponent's " + oppoCard + ", so you won these cards!</p><p>You have " + yourDeck.length + " cards, and your opponent has " + oppoDeck.length + ".</p>");
     // if anyone's deck is empty
-    if (yourDeck[0] === undefined || oppoDeck[0] === undefined) {
-      $("#results").html("<h2>GAME OVER</h2>");
+    if (yourDeck[0] === undefined) {
+      $("#results").html("<h2>GAME OVER</h2><p>You lost, and your people are decimated.</p>");
+      $("#start").css("display", "none");
     }
+    else if (oppoDeck[0] === undefined) {
+      $("#results").html("<h2>GAME OVER</h2><p>You win, and your soldiers avenge their losses by decimating your opponent's population. The massacre alienates all of your allies. Your next war may not go so well ... </p>");
+      $("#start").css("display", "none");
+    }
+    // return winner;
 
   } else if (yourCardVal < oppoCardVal) {
-    var winner = "opponent";
+    // var winner = "opponent";
     for (var i = 0; i < $(".card").length; i++) {
       oppoDeck.push("<div class='card'>" + $('.card').eq(i).html() + "</div>");
     }
     yourDeck.splice(0, 1);
     oppoDeck.splice(0, 1);
     $("#results").html("<p>Your " + yourCard + " is lower than your opponent's " + oppoCard + ", so you lost these cards :(</p>");
-    if (yourDeck[0] === undefined || oppoDeck[0] === undefined) {
-      $("#results").html("<h2>GAME OVER</h2>");
+    if (yourDeck[0] === undefined) {
+      $("#results").html("<h2>GAME OVER</h2><p>You lost, and your people are decimated.</p>");
+      $("#start").css("display", "none");
     }
+    else if (oppoDeck[0] === undefined) {
+      $("#results").html("<h2>GAME OVER</h2><p>You win, and your soldiers avenge their losses ... by decimating your opponent's population. The massacre alienates all of your allies. Your next war may not go so well ... </p>");
+      $("#start").css("display", "none");
+    }
+    // return winner;
 
   } else if (yourCardVal === oppoCardVal) {
     // if they've clicked at least 10 times, and had at least 1 war, end the game
@@ -156,6 +176,11 @@ function endGame() {
     }
     $("#continue").css("display", "none");
   })
+}
+
+function annihilate() {
+  $("body").empty()
+  $("body").append("<h1>Total annihilation</h1>");
 }
 
 function wageWar() {
@@ -203,10 +228,44 @@ function wageWar() {
   $("#start").css("display", "inline");
 
   // run whoWins function; tell user they can hover
-  var winner = whoWins(yourCard, oppoCard);
-  if (winner === you) {
-    $("#peacehover").html("<p>Peace declared! Hover over the black cards to see which ones you won - and kept>:).</p>");
-  } else {
-    $("#peacehover").html("<p>Peace declared ... but at what price? Hover over the black cards to see what you lost.</p>");
+  // var winner = whoWins(yourCard, oppoCard);
+  whoWins(yourCard, oppoCard);
+  // if (winner === "you") {
+  //   $("#peacehover").html("<p>Peace declared! Hover over the black cards to see which ones you won - and kept>:).</p>");
+  // } else if (winner === "opponent") {
+  //   $("#peacehover").html("<p>Peace declared ... but at what price? Hover over the black cards to see what you lost.</p>");
+  // }
+}
+
+// If you play a joker or jester, you win the match, plus extra cards from your opponent. The number of extra cards is equal to the value of the card your opponent played against your joker/jester.
+function jesterPlay(yourCard, oppoCard, yourCardVal, oppoCardVal) {
+  if ((yourCard === "jester" || yourCard === "joker") && (oppoCard !== "jester" && oppoCard !== "joker")) {
+    $("#results").html("<p>You played your " + yourCard + ", and your opponent played their " + oppoCard + "!  Because their " + oppoCard + " is worth " + oppoCardVal + " points, you win that many extra cards from your opponent!</p>");
+    yourDeck.splice(0, 1);
+    yourDeck.push("<div class='card'>" + $('.card').eq(0).html() + "</div>");
+    for (var i = 0; i < oppoCardVal + 1; i++) {
+      yourDeck.push(oppoDeck[i]);
+    }
+    oppoDeck.splice(0, oppoCardVal + 1);
+    return yourCardVal;
+
+  } else  if ((yourCard !== "jester" && yourCard !== "joker") && (oppoCard === "jester" || oppoCard === "joker")) {
+    $("#results").html("<p>You played your " + yourCard + ", but your opponent played their " + oppoCard + "! Because your " + yourCard + " is worth " + yourCardVal + " points, you have to give that many extra cards to your opponent :(</p>");
+    oppoDeck.splice(0, 1);
+    oppoDeck.push("<div class='card'>" + $('.card').eq(1).html() + "</div>");
+    for (var i = 0; i < yourCardVal + 1; i++) {
+      oppoDeck.push(yourDeck[i]);
+    }
+    yourDeck.splice(0, yourCardVal + 1);
+    return oppoCardVal;
+
+  // But if you both play a jester or a joker, you self-destruct.
+  // (I couldn't get the start button to actually go away though ...)
+  } else  if ((yourCard === "jester" || yourCard === "joker") && (oppoCard === "jester" || oppoCard === "joker")) {
+    $("#results").html("<p>Of all the risks in the Game of War ... the most dangerous and deadly of all is pitting two jokers or jesters against each other.</p>");
+    $("#start").css("display", "none");
+    $("#peril").css("display", "inline");
+    $("#peril").on("click", annihilate);
+
   }
 }
