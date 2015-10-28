@@ -53,6 +53,7 @@ Problems/bugs:
 - If the 5th cards each player plays during a war also match, it plays another war (on a new screen), but the top 2 cards are new ones, not the original matched pair. 
 - The exception to the above rule is if the 5th cards in a war are both jokers - then it moves striaght to the joker vs. joker scenario. 
 - In any joker vs. joker scenario, I couldn't get the "Continue" button to disappear, although it doesn't do anything if you click it.
+- The class 'lost', which 
 
 I included the joker originally because I wanted it joker to be a trump card that steals a number of cards from the opponent equal to the value of the card the opponent played, but didn't have the chance. But I liked the gradient I used on those cards so I kept it.
 
