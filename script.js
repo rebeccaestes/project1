@@ -8,6 +8,7 @@ var cannons = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "k
 var jokers = ["joker", "jester"];
 
 // Make deck, with card formatting
+// (ERICA) This is a lot of repeated code. How could you refactor this?
 for (var i = 0; i < swords.length; i++) {
   deck.push("<div class='card sword'><p id='label'>" + swords[i] + "</p><img src='img/sword.png' alt='sword'></div>");
 }
@@ -25,12 +26,12 @@ for (var i = 0; i < jokers.length; i++) {
 }
 
 // shuffle deck
-deck.sort(function() { 
+deck.sort(function() {
   return 0.5 - Math.random();
 });
 
 // Split deck in half
-var oppoDeck = deck.splice(deck.length / 2, deck.length / 2);
+var oppoDeck = deck.splice(deck.length / 2, deck.length / 2); //(ERICA) Nice!!
 var yourDeck = deck;
 
 var yourCardVal, oppoCardVal, yourCard, oppoCard, cardClasses;
@@ -92,13 +93,14 @@ function whoWins(yourCard, oppoCard) {
     oppoCardVal = "exception";
   } else {
     oppoCardVal = parseInt(oppoCard);
-  } 
+  }
+  // (ERICA) Again, a lot of repetition. Storing each card in an object could you give immediate access to a "value" property for each card, rather than having to covert strings over and over.
 
   // if you play a joker or a jester, something special should happen ...
   if (yourCardVal === "exception" || oppoCardVal === "exception") {
     jesterPlay(yourCard, oppoCard, yourCardVal, oppoCardVal);
     return yourCardVal, oppoCardVal;
-  } 
+  }
 
   if (yourCardVal > oppoCardVal) {
     // if you win, all of the cards on display move to the end of your deck
